@@ -365,9 +365,9 @@ version = "1.0.0"
 
 [[JLD2]]
 deps = ["DataStructures", "FileIO", "MacroTools", "Mmap", "Pkg", "Printf", "Reexport", "TranscodingStreams", "UUIDs"]
-git-tree-sha1 = "192934b3e2a94e897ce177423fd6cf7bdf464bce"
+git-tree-sha1 = "46b7834ec8165c541b0b5d1c8ba63ec940723ffb"
 uuid = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
-version = "0.4.14"
+version = "0.4.15"
 
 [[JLLWrappers]]
 deps = ["Preferences"]

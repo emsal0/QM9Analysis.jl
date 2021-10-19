@@ -4,12 +4,11 @@ using JSON
 using GeometricFlux
 using DataFrames
 using LightGraphs
+using JLD2
 
 function process_atom_data(lines)
     matx = zeros(Float64, 4, length(lines))
-    @show lines
-    for (i,l) in lines
-        @show i,l
+    for (i,l) in enumerate(lines)
         coord_strs = strip(l[2:end]) |> x -> split(x, '\t')
         coord_strs = coord_strs[coord_strs .!= ""]
         coords = map(x -> parse(Float64, x), coord_strs)
@@ -31,7 +30,7 @@ function get_df(filename)
                   "H", "G", "Cv"]
     raw_props = split(raw_lines[2], '\t')
     props_dict = Dict(zip(props_meta, raw_props))
-    raw_atom_data = raw_lines[3:3+n_atoms]
+    raw_atom_data = raw_lines[3:3+n_atoms-1]
     smiles = split(raw_lines[4+n_atoms], '\t')
 
     mol_data = RDKitMinimalLib.get_mol(smiles[1]) |> RDKitMinimalLib.get_json |> JSON.parse
@@ -42,14 +41,12 @@ function get_df(filename)
     num_bonds = length(moljson["bonds"])
     nf = process_atom_data(raw_atom_data)
     ef = zeros(1, num_bonds)
-    for (i,bond) in moljson["bonds"]
+    for (i,bond) in enumerate(moljson["bonds"])
         add_edge!(mol_graph, bond["atoms"][1] + 1,  bond["atoms"][2] + 1)
-        ef[:,i] = get(bond, "bo", 1)
+        ef[i] = get(bond, "bo", 1)
     end
 
     mol_fg = FeaturedGraph(mol_graph, nf=nf, ef=ef)
-
-    @show data
 
     return Dict(
                 props_dict...,
