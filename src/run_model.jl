@@ -11,6 +11,7 @@ dat = open(DATAFILE) do io
     deserialize(io)
 end
 
+loss(gf, y) = Flux.Losses.mse(model(gf), y)
 for i in 1:length(dat)
-    println(model(dat[i]["molecule"]), " ", dat[i]["R2"])
+    @show loss(dat[i]["molecule"], parse(Float64, dat[i]["R2"]))
 end
