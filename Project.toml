@@ -1,7 +1,7 @@
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
 GeometricFlux = "7e08b658-56d3-11e9-2997-919d5b31e4ea"
-JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 LightGraphs = "093fc24a-ae57-5d10-9952-331d41423f4d"
 RDKitMinimalLib = "44044271-7623-48dc-8250-42433c44e4b7"
