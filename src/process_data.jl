@@ -94,5 +94,4 @@ for datafile in readdir(DATADIR)
     end
 end
 
-@show datarows[1:100]
 serialize("data.blob", datarows)
