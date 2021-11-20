@@ -2,9 +2,10 @@ using Flux
 using Flux: @epochs
 using GeometricFlux
 using Serialization
+using CUDA
 using BSON: @save
 
-DATAFILE="data.blob"
+DATAFILE="databig.blob"
 dat = open(DATAFILE) do io
     deserialize(io)
 end
@@ -34,7 +35,7 @@ dat_val  = [(row["molecule"], parse(Float64, row["R2"])) for row in dat[NUM_TRAI
 
 losses_val = [loss(x,y) for (x,y) in dat_val]
 avg_loss_val = 1/length(losses_val) * sum(losses_val)
-@show max(losses_val)
+@show maximum(losses_val)
 @show avg_loss_val
 
 @save "model1.bson" model

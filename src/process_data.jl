@@ -11,7 +11,8 @@ function process_atom_data(lines)
     for (i,l) in enumerate(lines)
         coord_strs = strip(l[2:end]) |> x -> split(x, '\t')
         coord_strs = coord_strs[coord_strs .!= ""]
-        coords = map(x -> parse(Float64, x), coord_strs)
+        coords = map(x -> parse(Float64, replace(x, "*^" => "e")
+                               ), coord_strs)
         @assert length(coords) == 4
         matx[:,i] = coords  
     end
@@ -85,12 +86,13 @@ end
 
 datarows = []
 
+DATADIR = "/run/media/em/169747FC12AAEC72/datasets/qm9/"
 DATADIR = "chemdata/"
 for datafile in readdir(DATADIR)
     try
-       push!(datarows, get_df(DATADIR * datafile))
-    catch
-        println("Error in file $(datafile)")
+        push!(datarows, get_df(DATADIR * datafile))
+    catch err
+        println("Error in file $(datafile): $(err)")
     end
 end
 
